@@ -8,14 +8,16 @@
 #include<string.h>
 #include<stdlib.h>
 #include<time.h>
+
+
 ifstream f1,f2;
 ofstream f3,f4;
 int ppsubc,pqsubc,v;
 int i,j,m=13,n=79,flag=0,flag2=0;
 int pos1[2]={1,1},pos2[2]={1,1};
 class player{
-public:	int paisa;
-player(){paisa=25000;}
+public:	int money;
+player(){money=25000;}
 
 }pp,pq;
 
@@ -85,22 +87,22 @@ cout<<endl;
 void playerdisp()
 {
 
- if(pp.paisa>=ppsubc )
-  {pp.paisa=pp.paisa-ppsubc;
+ if(pp.money>=ppsubc )
+  {pp.money=pp.money-ppsubc;
    ppsubc=0;	}
  else
- {cout<<"Sorry P you have lost, Q has won, press enter to exit";getch();}
- if(pq.paisa>=pqsubc )
-  {pq.paisa=pq.paisa-pqsubc;
+ {cout<<"Player P you have lost, Q has won, press enter to exit";getch();}
+ if(pq.money>=pqsubc )
+  {pq.money=pq.money-pqsubc;
   pqsubc=0;}
  else
- {cout<<"Sorry Q you have lost, P has won, press enter to exit";getch();}
+ {cout<<"Player Q you have lost, P has won, press enter to exit";getch();}
 
-cout<<endl<<"PLAYER P CASH: $"<<pp.paisa;
-cout<<'\t'<<"PLAYER Q CASH: $"<<pq.paisa<<endl;
+cout<<endl<<"PLAYER P CASH: $"<<pp.money;
+cout<<'\t'<<"PLAYER Q CASH: $"<<pq.money<<endl;
 }
 
-/*
+
 void create(){
 f3.open("backup",ios::binary | ios::app);
 p1.accept();
@@ -108,7 +110,7 @@ f3.write((char*)&p1,sizeof(p1));
 cout<<"RECORD ADDED, press enter";
 f3.close();
 }
-*/
+
 
 void backupfile(){
 f3.open("text",ios::binary);
@@ -122,10 +124,10 @@ f2.close();
 }
 void rents(int rent,int v)
 {if(v==1)
-	{pp.paisa=pp.paisa-rent;pq.paisa=pq.paisa+rent;
+	{pp.money=pp.money-rent;pq.money=pq.money+rent;
 	cout<<"\nRent Paid to Q by P\n";}
 else if(v==2)
-	{pq.paisa=pq.paisa-rent;pp.paisa=pp.paisa+rent;
+	{pq.money=pq.money-rent;pp.money=pp.money+rent;
 	cout<<"\nRent Paid to P by Q\n";}
 }
 void modowner(int x1,int y1,int n){
@@ -156,11 +158,11 @@ f1.open("text",ios::binary);
 while(f1.read((char*)&p1,sizeof(p1)))
 {if(p1.rx()==x1 && p1.ry()==y1)
 	{
-	 if( v==1  && pp.paisa>=p1.rcost() && p1.owner==0)
+	 if( v==1  && pp.money>=p1.rcost() && p1.owner==0)
 	  {
 
-		cout<<endl<<"PLAYER P CASH: $"<<pp.paisa;
-		cout<<'\t'<<"PLAYER Q CASH: $"<<pq.paisa<<endl;
+		cout<<endl<<"PLAYER P CASH: $"<<pp.money;
+		cout<<'\t'<<"PLAYER Q CASH: $"<<pq.money<<endl;
 
 		p1.display();
 		cout<<"\nP, do you want to buy the property?(Y/N):";
@@ -179,11 +181,11 @@ while(f1.read((char*)&p1,sizeof(p1)))
 
 
 	  }
-	  else if(v==1 && pp.paisa>=p1.rrent() &&p1.owner==2)
+	  else if(v==1 && pp.money>=p1.rrent() &&p1.owner==2)
 	  {p1.display();rents(p1.rrent(),v); }
 	  else if( v==1 && p1.owner==1){p1.display();cout<<"\nAlready owned";}
 
-	  if( v==2  && pq.paisa>=p1.rcost() && p1.owner==0)
+	  if( v==2  && pq.money>=p1.rcost() && p1.owner==0)
 	  {p1.display();
 	  cout<<"\nQ, do you want to buy the property?(Y/N):";
 		char ch;
@@ -200,7 +202,7 @@ while(f1.read((char*)&p1,sizeof(p1)))
 			p1.owner=0;
 	}
 
-	  else if(v==2 && pq.paisa>=p1.rrent() &&p1.owner==1)
+	  else if(v==2 && pq.money>=p1.rrent() &&p1.owner==1)
 	  { p1.display();rents(p1.rrent(),v); }
 	  else if(v==2 && p1.owner==2){p1.display();cout<<"\nAlready owned";}
 
@@ -223,8 +225,8 @@ f1.close();
 return asset;
 }
 void result_of_game(){
-int assetp=searchowner(1)+pp.paisa;
-int assetq=searchowner(2)+pq.paisa;
+int assetp=searchowner(1)+pp.money;
+int assetq=searchowner(2)+pp.money;
 	if(assetp>assetq){
 	cout<<"P is the overall winner";}
 	else if(assetq>assetp){
@@ -232,7 +234,7 @@ int assetq=searchowner(2)+pq.paisa;
 	else
 	cout<<"BOTH ARE THE WINNERS";
 }
-/*
+
 void show() {
 f1.open("text",ios::binary);
 while(f1.read((char*)&p1,sizeof(p1)))
@@ -240,7 +242,7 @@ while(f1.read((char*)&p1,sizeof(p1)))
 	}
 f1.close();
 }
-*/
+
 
 
 void move(int pos1[]){
